@@ -468,7 +468,16 @@ h6 {
 }
 
 .contact-info:hover i {
-  transform: scale(1.2);
+    transform: scale(1.2);
+}
+
+.contact-info .btn {
+    transition: all 0.3s ease;
+}
+
+.contact-info .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Footer */

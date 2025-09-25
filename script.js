@@ -108,11 +108,12 @@ function initContactForm() {
     const formData = new FormData(this);
     const name = formData.get('name');
     const email = formData.get('email');
+    const phone = formData.get('phone');
     const subject = formData.get('subject');
     const message = formData.get('message');
 
     // Basic validation
-    if (!name || !email || !subject || !message) {
+    if (!name || !email || !phone || !subject || !message) {
       showNotification('Please fill in all fields', 'error');
       return;
     }
@@ -122,20 +123,139 @@ function initContactForm() {
       return;
     }
 
-    // Simulate form submission
-    const submitBtn = this.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
+    if (!isValidPhone(phone)) {
+      showNotification('Please enter a valid phone number', 'error');
+      return;
+    }
 
-    submitBtn.textContent = 'Sending...';
-    submitBtn.disabled = true;
+    // Show submission options
+    showSubmissionOptions(name, email, phone, subject, message);
+  });
+}
 
-    // Simulate API call
-    setTimeout(() => {
-      showNotification('Message sent successfully!', 'success');
-      contactForm.reset();
-      submitBtn.textContent = originalText;
-      submitBtn.disabled = false;
-    }, 2000);
+// Phone validation
+function isValidPhone(phone) {
+  const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+  return phoneRegex.test(phone.replace(/\s/g, ''));
+}
+
+// Show submission options
+function showSubmissionOptions(name, email, phone, subject, message) {
+  // Create modal for submission options
+  const modalHtml = `
+    <div class="modal fade" id="submissionModal" tabindex="-1" aria-labelledby="submissionModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="submissionModalLabel">Choose Submission Method</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="mb-3">How would you like to send your message?</p>
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary" onclick="sendViaEmail('${name}', '${email}', '${phone}', '${subject}', '${message}')">
+                <i class="fas fa-envelope me-2"></i>Send via Email
+              </button>
+              <button class="btn btn-success" onclick="sendViaWhatsApp('${name}', '${email}', '${phone}', '${subject}', '${message}')">
+                <i class="fab fa-whatsapp me-2"></i>Send via WhatsApp
+              </button>
+              <button class="btn btn-info" onclick="copyToClipboard('${name}', '${email}', '${phone}', '${subject}', '${message}')">
+                <i class="fas fa-copy me-2"></i>Copy Message
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Remove existing modal if any
+  const existingModal = document.getElementById('submissionModal');
+  if (existingModal) {
+    existingModal.remove();
+  }
+
+  // Add modal to body
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+  // Show modal
+  const modal = new bootstrap.Modal(document.getElementById('submissionModal'));
+  modal.show();
+}
+
+// Send via Email
+function sendViaEmail(name, email, phone, subject, message) {
+  const emailBody = `
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Subject: ${subject}
+
+Message:
+${message}
+  `;
+
+  const emailLink = `mailto:supplaunch@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+  
+  // Close modal
+  const modal = bootstrap.Modal.getInstance(document.getElementById('submissionModal'));
+  modal.hide();
+  
+  // Open email client
+  window.open(emailLink);
+  
+  showNotification('Email client opened with your message!', 'success');
+}
+
+// Send via WhatsApp
+function sendViaWhatsApp(name, email, phone, subject, message) {
+  const whatsappMessage = `
+*New Contact Form Submission*
+
+*Name:* ${name}
+*Email:* ${email}
+*Phone:* ${phone}
+*Subject:* ${subject}
+
+*Message:*
+${message}
+
+---
+Sent from Launch Supp Portfolio
+  `;
+
+  const whatsappLink = `https://wa.me/966504877945?text=${encodeURIComponent(whatsappMessage)}`;
+  
+  // Close modal
+  const modal = bootstrap.Modal.getInstance(document.getElementById('submissionModal'));
+  modal.hide();
+  
+  // Open WhatsApp
+  window.open(whatsappLink, '_blank');
+  
+  showNotification('WhatsApp opened with your message!', 'success');
+}
+
+// Copy to Clipboard
+function copyToClipboard(name, email, phone, subject, message) {
+  const messageText = `
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Subject: ${subject}
+
+Message:
+${message}
+  `;
+
+  navigator.clipboard.writeText(messageText).then(() => {
+    // Close modal
+    const modal = bootstrap.Modal.getInstance(document.getElementById('submissionModal'));
+    modal.hide();
+    
+    showNotification('Message copied to clipboard!', 'success');
+  }).catch(() => {
+    showNotification('Failed to copy to clipboard', 'error');
   });
 }
 
