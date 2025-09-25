@@ -1,0 +1,646 @@
+/* Custom CSS for Personal Portfolio */
+
+/* Root Variables */
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --accent-color: #28a745;
+  --dark-color: #343a40;
+  --light-color: #f8f9fa;
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--dark-color);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--secondary-color);
+  margin-bottom: 3rem;
+}
+
+/* Navigation */
+.navbar {
+  background: rgba(0, 0, 0, 0.95) !important;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  padding: 1rem 0;
+}
+
+.navbar.scrolled {
+  background: rgba(0, 0, 0, 0.98) !important;
+  padding: 0.5rem 0;
+  box-shadow: var(--shadow);
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav-link {
+  font-weight: 500;
+  margin: 0 0.5rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Hero Section */
+.hero-section {
+  background: var(--gradient-primary);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.1)" points="0,1000 1000,0 1000,1000"/></svg>');
+  background-size: cover;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  animation: fadeInUp 1s ease-out;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.hero-content h2 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+.hero-buttons {
+  animation: fadeInUp 1s ease-out 0.8s both;
+}
+
+.hero-image {
+  position: relative;
+  z-index: 2;
+  animation: fadeInRight 1s ease-out 0.5s both;
+}
+
+.profile-image {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-image::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: var(--gradient-secondary);
+  border-radius: 50%;
+  z-index: -1;
+  animation: pulse 2s infinite;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.scroll-down {
+  display: inline-block;
+  color: white;
+  font-size: 1.5rem;
+  animation: bounce 2s infinite;
+  text-decoration: none;
+}
+
+/* About Section */
+#about {
+  padding: 100px 0;
+  background: white;
+}
+
+.about-content h3 {
+  color: var(--dark-color);
+  margin-bottom: 1.5rem;
+}
+
+.about-content p {
+  color: var(--secondary-color);
+  margin-bottom: 1.5rem;
+}
+
+.info-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.skills-section {
+  background: var(--light-color);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+.skill-item {
+  margin-bottom: 1.5rem;
+}
+
+.progress {
+  height: 8px;
+  border-radius: 4px;
+  background: #e9ecef;
+}
+
+.progress-bar {
+  background: var(--gradient-primary);
+  border-radius: 4px;
+  transition: width 1s ease-in-out;
+}
+
+/* Portfolio Section */
+#portfolio {
+  padding: 100px 0;
+  background: var(--light-color);
+}
+
+.portfolio-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.portfolio-item:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-hover);
+}
+
+.portfolio-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolio-image img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-image img {
+  transform: scale(1.1);
+}
+
+.portfolio-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 123, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-overlay {
+  opacity: 1;
+}
+
+.portfolio-content {
+  text-align: center;
+  color: white;
+  padding: 2rem;
+}
+
+.portfolio-content h4 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.portfolio-content p {
+  margin-bottom: 1.5rem;
+}
+
+.portfolio-links .btn {
+  margin: 0 0.5rem;
+}
+
+/* Download CV Section */
+#download-cv {
+  padding: 100px 0;
+  background: var(--gradient-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+#download-cv::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.1)" points="0,1000 1000,0 1000,1000"/></svg>');
+  background-size: cover;
+}
+
+.cv-content {
+  position: relative;
+  z-index: 2;
+}
+
+.cv-stats .stat-item {
+  padding: 1rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cv-stats .stat-item:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.cv-stats .stat-item h3 {
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.cv-download {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.cv-download:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.cv-icon {
+  animation: pulse 2s infinite;
+}
+
+.download-buttons .btn {
+  border-radius: 50px;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.download-buttons .btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.download-buttons .btn:hover::before {
+  left: 100%;
+}
+
+.download-buttons .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.cv-info {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 1rem;
+}
+
+/* Contact Section */
+#contact {
+  padding: 100px 0;
+  background: white;
+}
+
+.contact-form {
+  background: var(--light-color);
+  padding: 3rem;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+.form-control {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.contact-info {
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.contact-info:hover {
+  transform: translateY(-5px);
+}
+
+.contact-info i {
+  transition: all 0.3s ease;
+}
+
+.contact-info:hover i {
+  transform: scale(1.2);
+}
+
+/* Footer */
+footer {
+  background: var(--dark-color) !important;
+}
+
+.social-links a {
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+  transform: translateY(-3px);
+  color: var(--primary-color) !important;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .hero-buttons .btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .contact-form {
+    padding: 2rem 1rem;
+  }
+
+  .portfolio-content {
+    padding: 1rem;
+  }
+
+  .cv-download {
+    margin-top: 3rem;
+    padding: 2rem 1rem;
+  }
+
+  .download-buttons .btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .cv-stats .stat-item {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content h2 {
+    font-size: 1.2rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+}
+
+/* Utility Classes */
+.text-gradient {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.shadow-custom {
+  box-shadow: var(--shadow);
+}
+
+.shadow-custom:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+/* Loading Animation */
+.loading {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.loading.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Smooth Transitions */
+* {
+  transition: all 0.3s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0056b3;
+}
