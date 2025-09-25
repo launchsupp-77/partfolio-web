@@ -128,9 +128,148 @@ function initContactForm() {
       return;
     }
 
-    // Show submission options
-    showSubmissionOptions(name, email, phone, subject, message);
+    // Send form data
+    sendFormData(name, email, phone, subject, message);
   });
+}
+
+// Send form data via multiple methods
+async function sendFormData(name, email, phone, subject, message) {
+  const submitBtn = document.querySelector('button[type="submit"]');
+  const originalText = submitBtn.textContent;
+  
+  // Show loading state
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+  submitBtn.disabled = true;
+
+  try {
+    // Method 1: Send via EmailJS (if configured)
+    await sendViaEmailJS(name, email, phone, subject, message);
+    
+    // Method 2: Send via WhatsApp API
+    await sendViaWhatsAppAPI(name, email, phone, subject, message);
+    
+    // Method 3: Send via custom API endpoint
+    await sendViaAPI(name, email, phone, subject, message);
+    
+    showNotification('Message sent successfully!', 'success');
+    document.getElementById('contactForm').reset();
+    
+  } catch (error) {
+    console.error('Error sending message:', error);
+    showNotification('Failed to send message. Please try again.', 'error');
+  } finally {
+    // Reset button
+    submitBtn.innerHTML = originalText;
+    submitBtn.disabled = false;
+  }
+}
+
+// Send via EmailJS
+async function sendViaEmailJS(name, email, phone, subject, message) {
+  // EmailJS configuration (you need to set this up)
+  const serviceID = 'YOUR_SERVICE_ID'; // Replace with your EmailJS service ID
+  const templateID = 'YOUR_TEMPLATE_ID'; // Replace with your EmailJS template ID
+  const publicKey = 'YOUR_PUBLIC_KEY'; // Replace with your EmailJS public key
+
+  if (serviceID === 'YOUR_SERVICE_ID') {
+    throw new Error('EmailJS not configured');
+  }
+
+  const templateParams = {
+    from_name: name,
+    from_email: email,
+    phone: phone,
+    subject: subject,
+    message: message,
+    to_email: 'supplaunch@gmail.com'
+  };
+
+  // Load EmailJS library if not already loaded
+  if (typeof emailjs === 'undefined') {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+    document.head.appendChild(script);
+    
+    await new Promise((resolve) => {
+      script.onload = resolve;
+    });
+  }
+
+  emailjs.init(publicKey);
+  await emailjs.send(serviceID, templateID, templateParams);
+}
+
+// Send via WhatsApp API
+async function sendViaWhatsAppAPI(name, email, phone, subject, message) {
+  const whatsappMessage = `
+*New Contact Form Submission*
+
+*Name:* ${name}
+*Email:* ${email}
+*Phone:* ${phone}
+*Subject:* ${subject}
+
+*Message:*
+${message}
+
+---
+Sent from Launch Supp Portfolio
+  `;
+
+  // Using WhatsApp Business API (you need to set this up)
+  const whatsappAPI = 'YOUR_WHATSAPP_API_ENDPOINT'; // Replace with your WhatsApp API endpoint
+  
+  if (whatsappAPI === 'YOUR_WHATSAPP_API_ENDPOINT') {
+    // Fallback to direct WhatsApp link
+    const whatsappLink = `https://wa.me/966504877945?text=${encodeURIComponent(whatsappMessage)}`;
+    window.open(whatsappLink, '_blank');
+    return;
+  }
+
+  const response = await fetch(whatsappAPI, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      to: '966504877945',
+      message: whatsappMessage
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error('WhatsApp API failed');
+  }
+}
+
+// Send via custom API endpoint
+async function sendViaAPI(name, email, phone, subject, message) {
+  const apiEndpoint = 'contact-handler.php'; // Your PHP endpoint
+  
+  const response = await fetch(apiEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: name,
+      email: email,
+      phone: phone,
+      subject: subject,
+      message: message,
+      timestamp: new Date().toISOString()
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error('API request failed');
+  }
+
+  const result = await response.json();
+  if (!result.success) {
+    throw new Error(result.error || 'API request failed');
+  }
 }
 
 // Phone validation
@@ -195,15 +334,19 @@ Message:
 ${message}
   `;
 
-  const emailLink = `mailto:supplaunch@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
-  
+  const emailLink = `mailto:supplaunch@gmail.com?subject=${encodeURIComponent(
+    subject
+  )}&body=${encodeURIComponent(emailBody)}`;
+
   // Close modal
-  const modal = bootstrap.Modal.getInstance(document.getElementById('submissionModal'));
+  const modal = bootstrap.Modal.getInstance(
+    document.getElementById('submissionModal')
+  );
   modal.hide();
-  
+
   // Open email client
   window.open(emailLink);
-  
+
   showNotification('Email client opened with your message!', 'success');
 }
 
@@ -224,15 +367,19 @@ ${message}
 Sent from Launch Supp Portfolio
   `;
 
-  const whatsappLink = `https://wa.me/966504877945?text=${encodeURIComponent(whatsappMessage)}`;
-  
+  const whatsappLink = `https://wa.me/966504877945?text=${encodeURIComponent(
+    whatsappMessage
+  )}`;
+
   // Close modal
-  const modal = bootstrap.Modal.getInstance(document.getElementById('submissionModal'));
+  const modal = bootstrap.Modal.getInstance(
+    document.getElementById('submissionModal')
+  );
   modal.hide();
-  
+
   // Open WhatsApp
   window.open(whatsappLink, '_blank');
-  
+
   showNotification('WhatsApp opened with your message!', 'success');
 }
 
@@ -248,15 +395,20 @@ Message:
 ${message}
   `;
 
-  navigator.clipboard.writeText(messageText).then(() => {
-    // Close modal
-    const modal = bootstrap.Modal.getInstance(document.getElementById('submissionModal'));
-    modal.hide();
-    
-    showNotification('Message copied to clipboard!', 'success');
-  }).catch(() => {
-    showNotification('Failed to copy to clipboard', 'error');
-  });
+  navigator.clipboard
+    .writeText(messageText)
+    .then(() => {
+      // Close modal
+      const modal = bootstrap.Modal.getInstance(
+        document.getElementById('submissionModal')
+      );
+      modal.hide();
+
+      showNotification('Message copied to clipboard!', 'success');
+    })
+    .catch(() => {
+      showNotification('Failed to copy to clipboard', 'error');
+    });
 }
 
 // Email validation
