@@ -804,8 +804,10 @@ function initDownloadCV() {
       setTimeout(() => {
         // Download your actual PDF resume file
         const link = document.createElement('a');
-        link.href = 'Mahjoub_Osman_Resumev.pdf';
-        link.download = 'Mahjoub_Osman_Resume.pdf';
+        link.href =
+          'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.pdf';
+        link.download =
+          'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.pdf';
         link.click();
 
         // Reset button
@@ -832,8 +834,10 @@ function initDownloadCV() {
       setTimeout(() => {
         // Create a sample Word document download (in real implementation, this would be your actual Word file)
         const link = document.createElement('a');
-        link.href = 'Mahjoub_Osman_Resume.docx';
-        link.download = 'Mahjoub_Osman_Resume.docx';
+        link.href =
+          'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.docx';
+        link.download =
+          'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.docx';
         link.click();
 
         // Reset button
