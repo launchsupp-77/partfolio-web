@@ -137,7 +137,7 @@ function initContactForm() {
 async function sendFormData(name, email, phone, subject, message) {
   const submitBtn = document.querySelector('button[type="submit"]');
   const originalText = submitBtn.textContent;
-  
+
   // Show loading state
   submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
   submitBtn.disabled = true;
@@ -145,16 +145,15 @@ async function sendFormData(name, email, phone, subject, message) {
   try {
     // Method 1: Send via EmailJS (if configured)
     await sendViaEmailJS(name, email, phone, subject, message);
-    
+
     // Method 2: Send via WhatsApp API
     await sendViaWhatsAppAPI(name, email, phone, subject, message);
-    
+
     // Method 3: Send via custom API endpoint
     await sendViaAPI(name, email, phone, subject, message);
-    
+
     showNotification('Message sent successfully!', 'success');
     document.getElementById('contactForm').reset();
-    
   } catch (error) {
     console.error('Error sending message:', error);
     showNotification('Failed to send message. Please try again.', 'error');
@@ -182,15 +181,16 @@ async function sendViaEmailJS(name, email, phone, subject, message) {
     phone: phone,
     subject: subject,
     message: message,
-    to_email: 'supplaunch@gmail.com'
+    to_email: 'supplaunch@gmail.com',
   };
 
   // Load EmailJS library if not already loaded
   if (typeof emailjs === 'undefined') {
     const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+    script.src =
+      'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
     document.head.appendChild(script);
-    
+
     await new Promise((resolve) => {
       script.onload = resolve;
     });
@@ -219,10 +219,12 @@ Sent from Launch Supp Portfolio
 
   // Using WhatsApp Business API (you need to set this up)
   const whatsappAPI = 'YOUR_WHATSAPP_API_ENDPOINT'; // Replace with your WhatsApp API endpoint
-  
+
   if (whatsappAPI === 'YOUR_WHATSAPP_API_ENDPOINT') {
     // Fallback to direct WhatsApp link
-    const whatsappLink = `https://wa.me/966504877945?text=${encodeURIComponent(whatsappMessage)}`;
+    const whatsappLink = `https://wa.me/966504877945?text=${encodeURIComponent(
+      whatsappMessage
+    )}`;
     window.open(whatsappLink, '_blank');
     return;
   }
@@ -234,8 +236,8 @@ Sent from Launch Supp Portfolio
     },
     body: JSON.stringify({
       to: '966504877945',
-      message: whatsappMessage
-    })
+      message: whatsappMessage,
+    }),
   });
 
   if (!response.ok) {
@@ -246,7 +248,7 @@ Sent from Launch Supp Portfolio
 // Send via custom API endpoint
 async function sendViaAPI(name, email, phone, subject, message) {
   const apiEndpoint = 'contact-handler.php'; // Your PHP endpoint
-  
+
   const response = await fetch(apiEndpoint, {
     method: 'POST',
     headers: {
@@ -258,8 +260,8 @@ async function sendViaAPI(name, email, phone, subject, message) {
       phone: phone,
       subject: subject,
       message: message,
-      timestamp: new Date().toISOString()
-    })
+      timestamp: new Date().toISOString(),
+    }),
   });
 
   if (!response.ok) {
