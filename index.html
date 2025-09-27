@@ -470,8 +470,8 @@
 
         <!-- Code Snippets -->
         <div class="row">
-          <div class="col-lg-6 mb-4">
-            <div class="code-snippet">
+          <div class="col-lg-6 mb-4 d-flex">
+            <div class="code-snippet flex-fill d-flex flex-column" style="min-height: 100%;">
               <div class="code-header">
                 <div class="code-title">
                   <i class="fab fa-php me-2"></i>PHP API Endpoint
@@ -485,8 +485,8 @@
                   </button>
                 </div>
               </div>
-              <div class="code-content">
-                <pre><code id="php-code" class="language-php"><?php
+              <div class="code-content flex-fill" style="min-height: 400px;">
+                <pre class="h-100" style="height:100%;"><code id="php-code" class="language-php"><?php
 class UserController {
     public function createUser($data) {
         // Validate input data
@@ -515,8 +515,8 @@ class UserController {
             </div>
           </div>
 
-          <div class="col-lg-6 mb-4">
-            <div class="code-snippet">
+          <div class="col-lg-6 mb-4 d-flex">
+            <div class="code-snippet flex-fill d-flex flex-column" style="min-height: 100%;">
               <div class="code-header">
                 <div class="code-title">
                   <i class="fab fa-js-square me-2"></i>JavaScript React
@@ -531,8 +531,8 @@ class UserController {
                   </button>
                 </div>
               </div>
-              <div class="code-content">
-                <pre><code id="js-code" class="language-javascript">import React, { useState, useEffect } from 'react';
+              <div class="code-content flex-fill" style="min-height: 400px;">
+                <pre class="h-100" style="height:100%;"><code id="js-code" class="language-javascript">import React, { useState, useEffect } from 'react';
 
 const UserDashboard = ({ userId }) => {
     const [user, setUser] = useState(null);
