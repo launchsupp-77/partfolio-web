@@ -882,6 +882,126 @@ function initDownloadCV() {
   }, 100); // Close setTimeout
 }
 
+// Typing animation for ASP.NET code
+function startTypingAnimation() {
+  const codeElement = document.getElementById('aspnet-code');
+  const typingBtn = document.getElementById('typingBtn');
+  const codeSnippet = document.querySelector('.code-snippet');
+
+  if (!codeElement || codeSnippet.classList.contains('typing-active')) {
+    return; // Animation already running or element not found
+  }
+
+  // Mark as active
+  codeSnippet.classList.add('typing-active');
+  typingBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Typing...';
+  typingBtn.disabled = true;
+
+  // Store original content
+  const originalContent = codeElement.innerHTML;
+
+  // Clear content
+  codeElement.innerHTML = '';
+
+  // Add typing cursor
+  const cursor = document.createElement('span');
+  cursor.className = 'typing-cursor';
+  codeElement.appendChild(cursor);
+
+  // Split content into lines
+  const lines = originalContent.split('\n');
+  let currentLine = 0;
+  let currentChar = 0;
+  let isTyping = true;
+
+  function typeNextChar() {
+    if (!isTyping) return;
+
+    if (currentLine < lines.length) {
+      const line = lines[currentLine];
+
+      if (currentChar < line.length) {
+        // Add character
+        const char = line[currentChar];
+        const charSpan = document.createElement('span');
+        charSpan.textContent = char;
+        charSpan.style.opacity = '0';
+        charSpan.style.animation = 'fadeInChar 0.1s ease-in forwards';
+
+        // Insert before cursor
+        codeElement.insertBefore(charSpan, cursor);
+        currentChar++;
+
+        // Random delay for realistic typing
+        const delay = Math.random() * 50 + 20; // 20-70ms
+        setTimeout(typeNextChar, delay);
+      } else {
+        // Move to next line
+        const lineBreak = document.createElement('br');
+        codeElement.insertBefore(lineBreak, cursor);
+        currentLine++;
+        currentChar = 0;
+
+        // Line break delay
+        setTimeout(typeNextChar, 100);
+      }
+    } else {
+      // Animation complete
+      isTyping = false;
+      cursor.remove();
+      codeSnippet.classList.remove('typing-active');
+      codeSnippet.classList.add('typing-complete');
+
+      // Reset button
+      typingBtn.innerHTML = '<i class="fas fa-redo me-2"></i>Replay';
+      typingBtn.disabled = false;
+
+      // Add completion effect
+      codeElement.style.animation = 'codeComplete 0.5s ease-out';
+    }
+  }
+
+  // Start typing
+  setTimeout(typeNextChar, 500);
+}
+
+// Add CSS for character fade-in animation
+const typingStyles = document.createElement('style');
+typingStyles.textContent = `
+  @keyframes fadeInChar {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes codeComplete {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .typing-active .code-content {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+  }
+  
+  .typing-complete .code-content {
+    background: #1e1e1e;
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.3);
+  }
+`;
+document.head.appendChild(typingStyles);
+
 // Simple download functions
 function downloadPDF() {
   console.log('PDF download clicked!');
