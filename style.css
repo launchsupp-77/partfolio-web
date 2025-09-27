@@ -400,13 +400,16 @@ h6 {
 
 .code-content pre {
   margin: 0;
-  padding: 1.5rem;
-  background: transparent;
-  color: #d4d4d4;
-  font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  padding: 2rem;
+  background: linear-gradient(145deg, #1a1a1a 0%, #2a2a2a 100%);
+  color: #e6e6e6;
+  font-family: 'Fira Code', 'JetBrains Mono', 'Monaco', 'Consolas', monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
   overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  position: relative;
 }
 
 .code-content code {
@@ -458,12 +461,13 @@ h6 {
   color: #dcdcaa;
 }
 
-/* Syntax highlighting for C# */
+/* Enhanced Syntax highlighting for C# */
 .language-csharp {
-  color: #d4d4d4;
+  color: #e6e6e6;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Keywords */
+/* Keywords - Enhanced with glow effect */
 .language-csharp .keyword,
 .language-csharp .using,
 .language-csharp .namespace,
@@ -493,60 +497,70 @@ h6 {
 .language-csharp .IActionResult,
 .language-csharp .IEnumerable,
 .language-csharp .void {
-  color: #569cd6;
+  color: #4fc3f7;
   font-weight: bold;
+  text-shadow: 0 0 8px rgba(79, 195, 247, 0.3);
 }
 
-/* Strings */
+/* Strings - Enhanced with warmer tone */
 .language-csharp .string,
 .language-csharp .string-literal {
-  color: #ce9178;
+  color: #ffb74d;
+  text-shadow: 0 0 6px rgba(255, 183, 77, 0.2);
 }
 
-/* Comments */
+/* Comments - Enhanced with better contrast */
 .language-csharp .comment {
-  color: #6a9955;
+  color: #81c784;
   font-style: italic;
+  text-shadow: 0 0 4px rgba(129, 199, 132, 0.2);
 }
 
-/* Classes and Types */
+/* Classes and Types - Enhanced with cyan glow */
 .language-csharp .class-name,
 .language-csharp .type {
-  color: #4ec9b0;
+  color: #4dd0e1;
+  text-shadow: 0 0 8px rgba(77, 208, 225, 0.3);
 }
 
-/* Methods and Functions */
+/* Methods and Functions - Enhanced with yellow glow */
 .language-csharp .method,
 .language-csharp .function {
-  color: #dcdcaa;
+  color: #fff176;
+  text-shadow: 0 0 6px rgba(255, 241, 118, 0.3);
 }
 
-/* Properties */
+/* Properties - Enhanced with light blue */
 .language-csharp .property {
-  color: #9cdcfe;
+  color: #90caf9;
+  text-shadow: 0 0 4px rgba(144, 202, 249, 0.2);
 }
 
-/* Attributes */
+/* Attributes - Enhanced with orange glow */
 .language-csharp .attribute {
-  color: #d7ba7d;
+  color: #ffab40;
+  text-shadow: 0 0 6px rgba(255, 171, 64, 0.3);
 }
 
-/* Variables */
+/* Variables - Enhanced with light purple */
 .language-csharp .variable {
-  color: #9cdcfe;
+  color: #ce93d8;
+  text-shadow: 0 0 4px rgba(206, 147, 216, 0.2);
 }
 
-/* Operators */
+/* Operators - Enhanced with subtle glow */
 .language-csharp .operator {
-  color: #d4d4d4;
+  color: #e1bee7;
+  text-shadow: 0 0 2px rgba(225, 190, 231, 0.1);
 }
 
-/* Numbers */
+/* Numbers - Enhanced with green glow */
 .language-csharp .number {
-  color: #b5cea8;
+  color: #a5d6a7;
+  text-shadow: 0 0 4px rgba(165, 214, 167, 0.2);
 }
 
-/* Special C# syntax */
+/* Special C# syntax - Enhanced with blue glow */
 .language-csharp .get,
 .language-csharp .set,
 .language-csharp .override,
@@ -554,28 +568,33 @@ h6 {
 .language-csharp .abstract,
 .language-csharp .sealed,
 .language-csharp .partial {
-  color: #569cd6;
+  color: #42a5f5;
   font-weight: bold;
+  text-shadow: 0 0 8px rgba(66, 165, 245, 0.3);
 }
 
-/* Generic types */
+/* Generic types - Enhanced with teal glow */
 .language-csharp .generic {
-  color: #4ec9b0;
+  color: #26c6da;
+  text-shadow: 0 0 6px rgba(38, 198, 218, 0.3);
 }
 
-/* Lambda expressions */
+/* Lambda expressions - Enhanced with amber glow */
 .language-csharp .lambda {
-  color: #dcdcaa;
+  color: #ffca28;
+  text-shadow: 0 0 6px rgba(255, 202, 40, 0.3);
 }
 
-/* LINQ */
+/* LINQ - Enhanced with purple glow */
 .language-csharp .linq {
-  color: #dcdcaa;
+  color: #ba68c8;
+  text-shadow: 0 0 6px rgba(186, 104, 200, 0.3);
 }
 
-/* Entity Framework */
+/* Entity Framework - Enhanced with indigo glow */
 .language-csharp .ef {
-  color: #4ec9b0;
+  color: #7986cb;
+  text-shadow: 0 0 8px rgba(121, 134, 203, 0.3);
 }
 
 /* Typing Animation Styles */
