@@ -141,7 +141,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## Support
 
-For questions or support, please contact [your-email@example.com](mailto:your-email@example.com).
+For questions or support, please contact [supplaunch@gmail.com](mailto:your-email@example.com).
 
 ---
 
