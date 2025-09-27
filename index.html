@@ -468,6 +468,224 @@
           </div>
         </div>
 
+                <!-- ASP.NET Code Example -->
+                <div class="row mb-4">
+                  <div class="col-lg-12">
+                    <div class="code-snippet">
+                      <div class="code-header">
+                        <div class="code-title">
+                          <i class="fab fa-microsoft me-2"></i>ASP.NET Core Web API Controller
+                        </div>
+                        <div class="code-actions">
+                          <button class="btn btn-sm btn-outline-light" onclick="copyCode('aspnet-code')">
+                            <i class="fas fa-copy"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="code-content">
+                        <pre><code id="aspnet-code" class="language-csharp">using Microsoft.AspNetCore.Mvc;
+        using Microsoft.EntityFrameworkCore;
+        using System.ComponentModel.DataAnnotations;
+        
+        namespace LaunchSupp.API.Controllers
+        {
+            [ApiController]
+            [Route("api/[controller]")]
+            public class UserController : ControllerBase
+            {
+                private readonly ApplicationDbContext _context;
+                private readonly ILogger<UserController> _logger;
+        
+                public UserController(ApplicationDbContext context, ILogger<UserController> logger)
+                {
+                    _context = context;
+                    _logger = logger;
+                }
+        
+                [HttpGet]
+                public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+                {
+                    try
+                    {
+                        var users = await _context.Users
+                            .Where(u => u.IsActive)
+                            .Select(u => new UserDto
+                            {
+                                Id = u.Id,
+                                Name = u.Name,
+                                Email = u.Email,
+                                CreatedAt = u.CreatedAt
+                            })
+                            .ToListAsync();
+        
+                        return Ok(users);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Error retrieving users");
+                        return StatusCode(500, "Internal server error");
+                    }
+                }
+        
+                [HttpGet("{id}")]
+                public async Task<ActionResult<UserDto>> GetUser(int id)
+                {
+                    var user = await _context.Users
+                        .Where(u => u.Id == id && u.IsActive)
+                        .Select(u => new UserDto
+                        {
+                            Id = u.Id,
+                            Name = u.Name,
+                            Email = u.Email,
+                            CreatedAt = u.CreatedAt
+                        })
+                        .FirstOrDefaultAsync();
+        
+                    if (user == null)
+                        return NotFound($"User with ID {id} not found");
+        
+                    return Ok(user);
+                }
+        
+                [HttpPost]
+                public async Task<ActionResult<UserDto>> CreateUser([FromBody] CreateUserRequest request)
+                {
+                    if (!ModelState.IsValid)
+                        return BadRequest(ModelState);
+        
+                    // Check if email already exists
+                    if (await _context.Users.AnyAsync(u => u.Email == request.Email))
+                        return Conflict("Email already exists");
+        
+                    var user = new User
+                    {
+                        Name = request.Name,
+                        Email = request.Email,
+                        PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+                        CreatedAt = DateTime.UtcNow,
+                        IsActive = true
+                    };
+        
+                    _context.Users.Add(user);
+                    await _context.SaveChangesAsync();
+        
+                    var userDto = new UserDto
+                    {
+                        Id = user.Id,
+                        Name = user.Name,
+                        Email = user.Email,
+                        CreatedAt = user.CreatedAt
+                    };
+        
+                    return CreatedAtAction(nameof(GetUser), new { id = user.Id }, userDto);
+                }
+        
+                [HttpPut("{id}")]
+                public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserRequest request)
+                {
+                    if (!ModelState.IsValid)
+                        return BadRequest(ModelState);
+        
+                    var user = await _context.Users.FindAsync(id);
+                    if (user == null || !user.IsActive)
+                        return NotFound($"User with ID {id} not found");
+        
+                    user.Name = request.Name;
+                    user.Email = request.Email;
+                    user.UpdatedAt = DateTime.UtcNow;
+        
+                    await _context.SaveChangesAsync();
+                    return NoContent();
+                }
+        
+                [HttpDelete("{id}")]
+                public async Task<IActionResult> DeleteUser(int id)
+                {
+                    var user = await _context.Users.FindAsync(id);
+                    if (user == null || !user.IsActive)
+                        return NotFound($"User with ID {id} not found");
+        
+                    user.IsActive = false;
+                    user.DeletedAt = DateTime.UtcNow;
+                    await _context.SaveChangesAsync();
+        
+                    return NoContent();
+                }
+            }
+        
+            // DTOs and Models
+            public class UserDto
+            {
+                public int Id { get; set; }
+                public string Name { get; set; } = string.Empty;
+                public string Email { get; set; } = string.Empty;
+                public DateTime CreatedAt { get; set; }
+            }
+        
+            public class CreateUserRequest
+            {
+                [Required]
+                [StringLength(100, MinimumLength = 2)]
+                public string Name { get; set; } = string.Empty;
+        
+                [Required]
+                [EmailAddress]
+                public string Email { get; set; } = string.Empty;
+        
+                [Required]
+                [StringLength(100, MinimumLength = 6)]
+                public string Password { get; set; } = string.Empty;
+            }
+        
+            public class UpdateUserRequest
+            {
+                [Required]
+                [StringLength(100, MinimumLength = 2)]
+                public string Name { get; set; } = string.Empty;
+        
+                [Required]
+                [EmailAddress]
+                public string Email { get; set; } = string.Empty;
+            }
+        
+            public class User
+            {
+                public int Id { get; set; }
+                public string Name { get; set; } = string.Empty;
+                public string Email { get; set; } = string.Empty;
+                public string PasswordHash { get; set; } = string.Empty;
+                public DateTime CreatedAt { get; set; }
+                public DateTime? UpdatedAt { get; set; }
+                public DateTime? DeletedAt { get; set; }
+                public bool IsActive { get; set; } = true;
+            }
+        
+            public class ApplicationDbContext : DbContext
+            {
+                public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+                    : base(options) { }
+        
+                public DbSet<User> Users { get; set; }
+        
+                protected override void OnModelCreating(ModelBuilder modelBuilder)
+                {
+                    modelBuilder.Entity<User>(entity =>
+                    {
+                        entity.HasKey(e => e.Id);
+                        entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+                        entity.Property(e => e.Email).IsRequired().HasMaxLength(255);
+                        entity.HasIndex(e => e.Email).IsUnique();
+                        entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                    });
+                }
+            }
+        }</code></pre>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
+
         <!-- Code Snippets -->
         <div class="row">
           <div class="col-lg-6 mb-4 d-flex">
@@ -570,223 +788,6 @@ const UserDashboard = ({ userId }) => {
 };
 
 export default UserDashboard;</code></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ASP.NET Code Example -->
-        <div class="row mb-4">
-          <div class="col-lg-12">
-            <div class="code-snippet">
-              <div class="code-header">
-                <div class="code-title">
-                  <i class="fab fa-microsoft me-2"></i>ASP.NET Core Web API Controller
-                </div>
-                <div class="code-actions">
-                  <button class="btn btn-sm btn-outline-light" onclick="copyCode('aspnet-code')">
-                    <i class="fas fa-copy"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="code-content">
-                <pre><code id="aspnet-code" class="language-csharp">using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-
-namespace LaunchSupp.API.Controllers
-{
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UserController : ControllerBase
-    {
-        private readonly ApplicationDbContext _context;
-        private readonly ILogger<UserController> _logger;
-
-        public UserController(ApplicationDbContext context, ILogger<UserController> logger)
-        {
-            _context = context;
-            _logger = logger;
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
-        {
-            try
-            {
-                var users = await _context.Users
-                    .Where(u => u.IsActive)
-                    .Select(u => new UserDto
-                    {
-                        Id = u.Id,
-                        Name = u.Name,
-                        Email = u.Email,
-                        CreatedAt = u.CreatedAt
-                    })
-                    .ToListAsync();
-
-                return Ok(users);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error retrieving users");
-                return StatusCode(500, "Internal server error");
-            }
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserDto>> GetUser(int id)
-        {
-            var user = await _context.Users
-                .Where(u => u.Id == id && u.IsActive)
-                .Select(u => new UserDto
-                {
-                    Id = u.Id,
-                    Name = u.Name,
-                    Email = u.Email,
-                    CreatedAt = u.CreatedAt
-                })
-                .FirstOrDefaultAsync();
-
-            if (user == null)
-                return NotFound($"User with ID {id} not found");
-
-            return Ok(user);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<UserDto>> CreateUser([FromBody] CreateUserRequest request)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            // Check if email already exists
-            if (await _context.Users.AnyAsync(u => u.Email == request.Email))
-                return Conflict("Email already exists");
-
-            var user = new User
-            {
-                Name = request.Name,
-                Email = request.Email,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                CreatedAt = DateTime.UtcNow,
-                IsActive = true
-            };
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            var userDto = new UserDto
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Email = user.Email,
-                CreatedAt = user.CreatedAt
-            };
-
-            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, userDto);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserRequest request)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var user = await _context.Users.FindAsync(id);
-            if (user == null || !user.IsActive)
-                return NotFound($"User with ID {id} not found");
-
-            user.Name = request.Name;
-            user.Email = request.Email;
-            user.UpdatedAt = DateTime.UtcNow;
-
-            await _context.SaveChangesAsync();
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null || !user.IsActive)
-                return NotFound($"User with ID {id} not found");
-
-            user.IsActive = false;
-            user.DeletedAt = DateTime.UtcNow;
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-    }
-
-    // DTOs and Models
-    public class UserDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; }
-    }
-
-    public class CreateUserRequest
-    {
-        [Required]
-        [StringLength(100, MinimumLength = 2)]
-        public string Name { get; set; } = string.Empty;
-
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; } = string.Empty;
-
-        [Required]
-        [StringLength(100, MinimumLength = 6)]
-        public string Password { get; set; } = string.Empty;
-    }
-
-    public class UpdateUserRequest
-    {
-        [Required]
-        [StringLength(100, MinimumLength = 2)]
-        public string Name { get; set; } = string.Empty;
-
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; } = string.Empty;
-    }
-
-    public class User
-    {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string PasswordHash { get; set; } = string.Empty;
-        public DateTime CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        public DateTime? DeletedAt { get; set; }
-        public bool IsActive { get; set; } = true;
-    }
-
-    public class ApplicationDbContext : DbContext
-    {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options) { }
-
-        public DbSet<User> Users { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
-                entity.Property(e => e.Email).IsRequired().HasMaxLength(255);
-                entity.HasIndex(e => e.Email).IsUnique();
-                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
-            });
-        }
-    }
-}</code></pre>
               </div>
             </div>
           </div>
