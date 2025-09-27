@@ -256,6 +256,493 @@ h6 {
   background: var(--light-color);
 }
 
+/* Code Showcase Section */
+#code-showcase {
+  padding: 100px 0;
+  background: white;
+}
+
+.tech-card {
+  background: white;
+  padding: 2rem 1.5rem;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  border: 1px solid #e9ecef;
+  height: 100%;
+}
+
+.tech-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--primary-color);
+}
+
+.tech-icon {
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.tech-card:hover .tech-icon {
+  transform: scale(1.1);
+}
+
+.tech-card h5 {
+  color: var(--dark-color);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.tech-card p {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.skill-level {
+  margin-top: 1rem;
+}
+
+.skill-level .progress {
+  height: 6px;
+  border-radius: 3px;
+  background: #e9ecef;
+  margin-bottom: 0.5rem;
+}
+
+.skill-level small {
+  color: var(--secondary-color);
+  font-size: 0.8rem;
+}
+
+/* Code Snippets */
+.code-snippet {
+  background: #1e1e1e;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.code-snippet:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.code-header {
+  background: #2d2d2d;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #404040;
+}
+
+.code-title {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+.code-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.code-content {
+  padding: 0;
+  background: #1e1e1e;
+}
+
+.code-content pre {
+  margin: 0;
+  padding: 1.5rem;
+  background: transparent;
+  color: #d4d4d4;
+  font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
+.code-content code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Syntax highlighting for PHP */
+.language-php {
+  color: #d4d4d4;
+}
+
+.language-php .php-tag {
+  color: #569cd6;
+}
+
+.language-php .keyword {
+  color: #c586c0;
+}
+
+.language-php .string {
+  color: #ce9178;
+}
+
+.language-php .comment {
+  color: #6a9955;
+}
+
+/* Syntax highlighting for JavaScript */
+.language-javascript {
+  color: #d4d4d4;
+}
+
+.language-javascript .keyword {
+  color: #c586c0;
+}
+
+.language-javascript .string {
+  color: #ce9178;
+}
+
+.language-javascript .comment {
+  color: #6a9955;
+}
+
+.language-javascript .function {
+  color: #dcdcaa;
+}
+
+/* Syntax highlighting for C# */
+.language-csharp {
+  color: #d4d4d4;
+}
+
+/* Keywords */
+.language-csharp .keyword,
+.language-csharp .using,
+.language-csharp .namespace,
+.language-csharp .class,
+.language-csharp .public,
+.language-csharp .private,
+.language-csharp .protected,
+.language-csharp .internal,
+.language-csharp .static,
+.language-csharp .async,
+.language-csharp .await,
+.language-csharp .return,
+.language-csharp .if,
+.language-csharp .else,
+.language-csharp .try,
+.language-csharp .catch,
+.language-csharp .finally,
+.language-csharp .throw,
+.language-csharp .new,
+.language-csharp .var,
+.language-csharp .bool,
+.language-csharp .int,
+.language-csharp .string,
+.language-csharp .DateTime,
+.language-csharp .Task,
+.language-csharp .ActionResult,
+.language-csharp .IActionResult,
+.language-csharp .IEnumerable,
+.language-csharp .void {
+  color: #569cd6;
+  font-weight: bold;
+}
+
+/* Strings */
+.language-csharp .string,
+.language-csharp .string-literal {
+  color: #ce9178;
+}
+
+/* Comments */
+.language-csharp .comment {
+  color: #6a9955;
+  font-style: italic;
+}
+
+/* Classes and Types */
+.language-csharp .class-name,
+.language-csharp .type {
+  color: #4ec9b0;
+}
+
+/* Methods and Functions */
+.language-csharp .method,
+.language-csharp .function {
+  color: #dcdcaa;
+}
+
+/* Properties */
+.language-csharp .property {
+  color: #9cdcfe;
+}
+
+/* Attributes */
+.language-csharp .attribute {
+  color: #d7ba7d;
+}
+
+/* Variables */
+.language-csharp .variable {
+  color: #9cdcfe;
+}
+
+/* Operators */
+.language-csharp .operator {
+  color: #d4d4d4;
+}
+
+/* Numbers */
+.language-csharp .number {
+  color: #b5cea8;
+}
+
+/* Special C# syntax */
+.language-csharp .get,
+.language-csharp .set,
+.language-csharp .override,
+.language-csharp .virtual,
+.language-csharp .abstract,
+.language-csharp .sealed,
+.language-csharp .partial {
+  color: #569cd6;
+  font-weight: bold;
+}
+
+/* Generic types */
+.language-csharp .generic {
+  color: #4ec9b0;
+}
+
+/* Lambda expressions */
+.language-csharp .lambda {
+  color: #dcdcaa;
+}
+
+/* LINQ */
+.language-csharp .linq {
+  color: #dcdcaa;
+}
+
+/* Entity Framework */
+.language-csharp .ef {
+  color: #4ec9b0;
+}
+
+/* Floating WhatsApp Button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  animation: whatsappPulse 2s infinite;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+}
+
+.whatsapp-link {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.whatsapp-link i {
+  font-size: 28px;
+  transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover .whatsapp-link i {
+  transform: scale(1.1);
+}
+
+.whatsapp-tooltip {
+  position: absolute;
+  right: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.whatsapp-tooltip::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-left-color: #333;
+}
+
+.whatsapp-float:hover .whatsapp-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(-5px);
+}
+
+/* WhatsApp Pulse Animation */
+@keyframes whatsappPulse {
+  0% {
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4),
+      0 0 0 10px rgba(37, 211, 102, 0.1);
+  }
+  100% {
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  }
+}
+
+/* Responsive WhatsApp Button */
+@media (max-width: 768px) {
+  .whatsapp-float {
+    bottom: 15px;
+    right: 15px;
+    width: 55px;
+    height: 55px;
+  }
+
+  .whatsapp-link i {
+    font-size: 24px;
+  }
+
+  .whatsapp-tooltip {
+    right: 65px;
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .whatsapp-float {
+    bottom: 10px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .whatsapp-link i {
+    font-size: 22px;
+  }
+
+  .whatsapp-tooltip {
+    right: 60px;
+    font-size: 11px;
+    padding: 5px 8px;
+  }
+}
+
+/* Code Statistics */
+.code-stats {
+  background: var(--light-color) !important;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.code-stats:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.stat-label {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* GitHub Cards */
+.github-card {
+  background: white;
+  padding: 2rem 1.5rem;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  text-align: center;
+  height: 100%;
+  border: 1px solid #e9ecef;
+}
+
+.github-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--primary-color);
+}
+
+.github-card i {
+  transition: all 0.3s ease;
+}
+
+.github-card:hover i {
+  transform: scale(1.1);
+}
+
+.github-card h5 {
+  color: var(--dark-color);
+  margin: 1rem 0;
+  font-weight: 600;
+}
+
+.github-card p {
+  color: var(--secondary-color);
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.github-card .btn {
+  border-radius: 25px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.github-card .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
 .portfolio-item {
   position: relative;
   overflow: hidden;

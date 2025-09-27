@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
   initParticleEffect();
   initScrollToTop();
   initDownloadCV();
+  initCodeCopy();
+  initSyntaxHighlighting();
+  initWhatsAppFloat();
 });
 
 // Navbar functionality
@@ -848,4 +851,176 @@ function initDownloadCV() {
       }, 2000);
     });
   }
+}
+
+// Code copy functionality
+function initCodeCopy() {
+  // Add copy functionality to code snippets
+  window.copyCode = function (codeId) {
+    const codeElement = document.getElementById(codeId);
+    if (!codeElement) return;
+
+    const codeText = codeElement.textContent;
+
+    // Copy to clipboard
+    navigator.clipboard
+      .writeText(codeText)
+      .then(() => {
+        // Show success notification
+        showNotification('Code copied to clipboard!', 'success');
+
+        // Add visual feedback to the copy button
+        const copyBtn = event.target.closest('button');
+        if (copyBtn) {
+          const originalIcon = copyBtn.innerHTML;
+          copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+          copyBtn.classList.add('btn-success');
+          copyBtn.classList.remove('btn-outline-light');
+
+          // Reset after 2 seconds
+          setTimeout(() => {
+            copyBtn.innerHTML = originalIcon;
+            copyBtn.classList.remove('btn-success');
+            copyBtn.classList.add('btn-outline-light');
+          }, 2000);
+        }
+      })
+      .catch(() => {
+        showNotification('Failed to copy code', 'error');
+      });
+  };
+}
+
+// Initialize syntax highlighting
+function initSyntaxHighlighting() {
+  // Wait for Prism.js to load
+  if (typeof Prism !== 'undefined') {
+    // Highlight all code blocks
+    Prism.highlightAll();
+
+    // Re-highlight when new content is added
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.type === 'childList') {
+          mutation.addedNodes.forEach(function (node) {
+            if (node.nodeType === 1) {
+              // Element node
+              const codeBlocks = node.querySelectorAll
+                ? node.querySelectorAll('pre code')
+                : [];
+              codeBlocks.forEach((block) => {
+                if (block.className.includes('language-')) {
+                  Prism.highlightElement(block);
+                }
+              });
+            }
+          });
+        }
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  } else {
+    // Retry after a short delay if Prism isn't loaded yet
+    setTimeout(initSyntaxHighlighting, 100);
+  }
+}
+
+// Initialize floating WhatsApp button
+function initWhatsAppFloat() {
+  const whatsappFloat = document.getElementById('whatsappFloat');
+  const whatsappLink = document.querySelector('.whatsapp-link');
+
+  if (!whatsappFloat || !whatsappLink) return;
+
+  // Show/hide button based on scroll position
+  let isVisible = true;
+  let lastScrollY = window.scrollY;
+
+  function handleScroll() {
+    const currentScrollY = window.scrollY;
+
+    // Show button when scrolling up or at top
+    if (currentScrollY < lastScrollY || currentScrollY < 100) {
+      if (!isVisible) {
+        whatsappFloat.style.opacity = '1';
+        whatsappFloat.style.transform = 'translateY(0)';
+        isVisible = true;
+      }
+    }
+    // Hide button when scrolling down (except at top)
+    else if (currentScrollY > lastScrollY && currentScrollY > 200) {
+      if (isVisible) {
+        whatsappFloat.style.opacity = '0.7';
+        whatsappFloat.style.transform = 'translateY(10px)';
+        isVisible = false;
+      }
+    }
+
+    lastScrollY = currentScrollY;
+  }
+
+  // Add scroll listener
+  window.addEventListener('scroll', handleScroll);
+
+  // Add click tracking
+  whatsappLink.addEventListener('click', function () {
+    // Track WhatsApp click (you can add analytics here)
+    console.log('WhatsApp button clicked');
+
+    // Add click animation
+    whatsappFloat.style.transform = 'scale(0.9)';
+    setTimeout(() => {
+      whatsappFloat.style.transform = 'scale(1)';
+    }, 150);
+  });
+
+  // Add hover effects
+  whatsappFloat.addEventListener('mouseenter', function () {
+    this.style.transform = 'scale(1.1)';
+  });
+
+  whatsappFloat.addEventListener('mouseleave', function () {
+    this.style.transform = 'scale(1)';
+  });
+
+  // Add keyboard accessibility
+  whatsappLink.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      this.click();
+    }
+  });
+
+  // Add focus styles for accessibility
+  whatsappLink.addEventListener('focus', function () {
+    whatsappFloat.style.outline = '2px solid #25d366';
+    whatsappFloat.style.outlineOffset = '2px';
+  });
+
+  whatsappLink.addEventListener('blur', function () {
+    whatsappFloat.style.outline = 'none';
+  });
+
+  // Auto-hide after 5 seconds of inactivity (optional)
+  let inactivityTimer;
+  function resetInactivityTimer() {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => {
+      if (window.scrollY > 500) {
+        whatsappFloat.style.opacity = '0.5';
+      }
+    }, 5000);
+  }
+
+  // Reset timer on user interaction
+  ['scroll', 'mousemove', 'click', 'keydown'].forEach((event) => {
+    document.addEventListener(event, resetInactivityTimer);
+  });
+
+  // Initial setup
+  resetInactivityTimer();
 }

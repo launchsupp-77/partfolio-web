@@ -48,6 +48,9 @@
               <a class="nav-link" href="#portfolio">Portfolio</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="#code-showcase">Code</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="#download-cv">Download CV</a>
             </li>
             <li class="nav-item">
@@ -391,6 +394,533 @@
       </div>
     </section>
 
+    <!-- Code Showcase Section -->
+    <section id="code-showcase" class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center mb-5">
+            <h2 class="section-title">Code & Programming</h2>
+            <p class="section-subtitle">
+              Explore my coding expertise and programming style
+            </p>
+          </div>
+        </div>
+
+        <!-- Programming Languages -->
+        <div class="row mb-5">
+          <div class="col-lg-12">
+            <h3 class="text-center mb-4">
+              Programming Languages & Technologies
+            </h3>
+            <div class="row">
+              <div class="col-lg-3 col-md-6 mb-4">
+                <div class="tech-card text-center">
+                  <div class="tech-icon">
+                    <i class="fab fa-php fa-3x text-primary"></i>
+                  </div>
+                  <h5>PHP</h5>
+                  <p class="text-muted">Backend Development</p>
+                  <div class="skill-level">
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-primary"
+                        style="width: 95%"
+                      ></div>
+                    </div>
+                    <small>Expert Level</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 mb-4">
+                <div class="tech-card text-center">
+                  <div class="tech-icon">
+                    <i class="fab fa-js-square fa-3x text-warning"></i>
+                  </div>
+                  <h5>JavaScript</h5>
+                  <p class="text-muted">Frontend & Backend</p>
+                  <div class="skill-level">
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-warning"
+                        style="width: 90%"
+                      ></div>
+                    </div>
+                    <small>Advanced</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 mb-4">
+                <div class="tech-card text-center">
+                  <div class="tech-icon">
+                    <i class="fab fa-python fa-3x text-success"></i>
+                  </div>
+                  <h5>Python</h5>
+                  <p class="text-muted">Data Science & AI</p>
+                  <div class="skill-level">
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-success"
+                        style="width: 85%"
+                      ></div>
+                    </div>
+                    <small>Advanced</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 mb-4">
+                <div class="tech-card text-center">
+                  <div class="tech-icon">
+                    <i class="fab fa-node-js fa-3x text-success"></i>
+                  </div>
+                  <h5>Node.js</h5>
+                  <p class="text-muted">Server Development</p>
+                  <div class="skill-level">
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-success"
+                        style="width: 80%"
+                      ></div>
+                    </div>
+                    <small>Intermediate</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 mb-4">
+                <div class="tech-card text-center">
+                  <div class="tech-icon">
+                    <i class="fab fa-microsoft fa-3x text-info"></i>
+                  </div>
+                  <h5>ASP.NET</h5>
+                  <p class="text-muted">Enterprise Development</p>
+                  <div class="skill-level">
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-info"
+                        style="width: 95%"
+                      ></div>
+                    </div>
+                    <small>Expert Level</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Snippets -->
+        <div class="row">
+          <div class="col-lg-6 mb-4">
+            <div class="code-snippet">
+              <div class="code-header">
+                <div class="code-title">
+                  <i class="fab fa-php me-2"></i>PHP API Endpoint
+                </div>
+                <div class="code-actions">
+                  <button
+                    class="btn btn-sm btn-outline-light"
+                    onclick="copyCode('php-code')"
+                  >
+                    <i class="fas fa-copy"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="code-content">
+                <pre><code id="php-code" class="language-php"><?php
+class UserController {
+    public function createUser($data) {
+        // Validate input data
+        $validator = new Validator();
+        if (!$validator->validate($data)) {
+            return $this->errorResponse('Invalid data');
+        }
+        
+        // Create user in database
+        $user = new User();
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
+        
+        if ($user->save()) {
+            return $this->successResponse([
+                'user' => $user->toArray(),
+                'message' => 'User created successfully'
+            ]);
+        }
+        
+        return $this->errorResponse('Failed to create user');
+    }
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 mb-4">
+            <div class="code-snippet">
+              <div class="code-header">
+                <div class="code-title">
+                  <i class="fab fa-js-square me-2"></i>JavaScript React
+                  Component
+                </div>
+                <div class="code-actions">
+                  <button
+                    class="btn btn-sm btn-outline-light"
+                    onclick="copyCode('js-code')"
+                  >
+                    <i class="fas fa-copy"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="code-content">
+                <pre><code id="js-code" class="language-javascript">import React, { useState, useEffect } from 'react';
+
+const UserDashboard = ({ userId }) => {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    
+    useEffect(() => {
+        fetchUserData();
+    }, [userId]);
+    
+    const fetchUserData = async () => {
+        try {
+            const response = await fetch(`/api/users/${userId}`);
+            const userData = await response.json();
+            setUser(userData);
+        } catch (error) {
+            console.error('Error fetching user:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+    if (loading) return <div>Loading...</div>;
+    
+    return (
+        <div className="user-dashboard">
+            <h2>Welcome, {user?.name}</h2>
+            <div className="user-stats">
+                <div className="stat-item">
+                    <span className="stat-label">Projects:</span>
+                    <span className="stat-value">{user?.projects?.length || 0}</span>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default UserDashboard;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ASP.NET Code Example -->
+        <div class="row mb-4">
+          <div class="col-lg-12">
+            <div class="code-snippet">
+              <div class="code-header">
+                <div class="code-title">
+                  <i class="fab fa-microsoft me-2"></i>ASP.NET Core Web API Controller
+                </div>
+                <div class="code-actions">
+                  <button class="btn btn-sm btn-outline-light" onclick="copyCode('aspnet-code')">
+                    <i class="fas fa-copy"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="code-content">
+                <pre><code id="aspnet-code" class="language-csharp">using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+
+namespace LaunchSupp.API.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class UserController : ControllerBase
+    {
+        private readonly ApplicationDbContext _context;
+        private readonly ILogger<UserController> _logger;
+
+        public UserController(ApplicationDbContext context, ILogger<UserController> logger)
+        {
+            _context = context;
+            _logger = logger;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        {
+            try
+            {
+                var users = await _context.Users
+                    .Where(u => u.IsActive)
+                    .Select(u => new UserDto
+                    {
+                        Id = u.Id,
+                        Name = u.Name,
+                        Email = u.Email,
+                        CreatedAt = u.CreatedAt
+                    })
+                    .ToListAsync();
+
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving users");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDto>> GetUser(int id)
+        {
+            var user = await _context.Users
+                .Where(u => u.Id == id && u.IsActive)
+                .Select(u => new UserDto
+                {
+                    Id = u.Id,
+                    Name = u.Name,
+                    Email = u.Email,
+                    CreatedAt = u.CreatedAt
+                })
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+                return NotFound($"User with ID {id} not found");
+
+            return Ok(user);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<UserDto>> CreateUser([FromBody] CreateUserRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // Check if email already exists
+            if (await _context.Users.AnyAsync(u => u.Email == request.Email))
+                return Conflict("Email already exists");
+
+            var user = new User
+            {
+                Name = request.Name,
+                Email = request.Email,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+                CreatedAt = DateTime.UtcNow,
+                IsActive = true
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            var userDto = new UserDto
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                CreatedAt = user.CreatedAt
+            };
+
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, userDto);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null || !user.IsActive)
+                return NotFound($"User with ID {id} not found");
+
+            user.Name = request.Name;
+            user.Email = request.Email;
+            user.UpdatedAt = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null || !user.IsActive)
+                return NotFound($"User with ID {id} not found");
+
+            user.IsActive = false;
+            user.DeletedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+    }
+
+    // DTOs and Models
+    public class UserDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public DateTime CreatedAt { get; set; }
+    }
+
+    public class CreateUserRequest
+    {
+        [Required]
+        [StringLength(100, MinimumLength = 2)]
+        public string Name { get; set; } = string.Empty;
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(100, MinimumLength = 6)]
+        public string Password { get; set; } = string.Empty;
+    }
+
+    public class UpdateUserRequest
+    {
+        [Required]
+        [StringLength(100, MinimumLength = 2)]
+        public string Name { get; set; } = string.Empty;
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
+    }
+
+    public class User
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string PasswordHash { get; set; } = string.Empty;
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
+        public bool IsActive { get; set; } = true;
+    }
+
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options) { }
+
+        public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Email).IsRequired().HasMaxLength(255);
+                entity.HasIndex(e => e.Email).IsUnique();
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            });
+        }
+    }
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Statistics -->
+        <div class="row mt-5">
+          <div class="col-lg-12">
+            <div class="code-stats bg-light p-4 rounded">
+              <h4 class="text-center mb-4">Coding Statistics</h4>
+              <div class="row">
+                <div class="col-md-3 col-6 mb-3">
+                  <div class="stat-item text-center">
+                    <div class="stat-number text-primary">75,000+</div>
+                    <div class="stat-label">Lines of Code</div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-6 mb-3">
+                  <div class="stat-item text-center">
+                    <div class="stat-number text-success">20+</div>
+                    <div class="stat-label">Technologies</div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-6 mb-3">
+                  <div class="stat-item text-center">
+                    <div class="stat-number text-warning">300+</div>
+                    <div class="stat-label">Git Commits</div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-6 mb-3">
+                  <div class="stat-item text-center">
+                    <div class="stat-number text-info">7+</div>
+                    <div class="stat-label">Years Experience</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GitHub Activity -->
+        <div class="row mt-5">
+          <div class="col-lg-12 text-center">
+            <h4 class="mb-4">GitHub Activity</h4>
+            <div class="github-stats">
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <div class="github-card">
+                    <i class="fab fa-github fa-2x text-dark mb-3"></i>
+                    <h5>Repositories</h5>
+                    <p class="text-muted">Check out my open source projects</p>
+                    <a
+                      href="https://github.com/launchsupp-77"
+                      target="_blank"
+                      class="btn btn-outline-dark"
+                    >
+                      <i class="fab fa-github me-2"></i>View Profile
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="github-card">
+                    <i class="fas fa-code-branch fa-2x text-primary mb-3"></i>
+                    <h5>Contributions</h5>
+                    <p class="text-muted">Active in open source community</p>
+                    <a
+                      href="https://github.com/launchsupp-77"
+                      target="_blank"
+                      class="btn btn-outline-primary"
+                    >
+                      <i class="fas fa-external-link-alt me-2"></i>View Activity
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="github-card">
+                    <i class="fas fa-star fa-2x text-warning mb-3"></i>
+                    <h5>Projects</h5>
+                    <p class="text-muted">Featured and starred repositories</p>
+                    <a
+                      href="https://github.com/launchsupp-77"
+                      target="_blank"
+                      class="btn btn-outline-warning"
+                    >
+                      <i class="fas fa-star me-2"></i>View Stars
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Download CV Section -->
     <section id="download-cv" class="py-5 bg-primary text-white">
       <div class="container">
@@ -470,111 +1000,6 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-5">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 text-center mb-5">
-            <h2 class="section-title">Get In Touch</h2>
-            <p class="section-subtitle">
-              Let's work together on your next project
-            </p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <form id="contactForm" class="contact-form">
-              <div class="row">
-                <div class="col-md-4 mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="name"
-                    name="name"
-                    placeholder="Your Name"
-                    required
-                  />
-                </div>
-                <div class="col-md-6 mb-3">
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder="Your Email"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="mb-3">
-                <input
-                  type="phone"
-                  class="form-control"
-                  id="phone"
-                  name="phone"
-                  placeholder="Your Phone Number"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="subject"
-                  name="subject"
-                  placeholder="Subject"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <textarea
-                  class="form-control"
-                  id="message"
-                  name="message"
-                  rows="5"
-                  placeholder="Your Message"
-                  required
-                ></textarea>
-              </div>
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-lg">
-                  Send Message
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="row mt-5">
-          <div class="col-lg-4 text-center mb-4">
-            <div class="contact-info">
-              <i class="fas fa-envelope fa-2x text-primary mb-3"></i>
-              <h5>Email</h5>
-              <p>supplaunch@gmail.com</p>
-            </div>
-          </div>
-          <div class="col-lg-4 text-center mb-4">
-            <div class="contact-info">
-              <i class="fas fa-phone fa-2x text-primary mb-3"></i>
-              <h5>Phone</h5>
-              <!-- <p>+966 504877945</p> -->
-              <a
-                href="https://wa.me/966562724688"
-                target="_blank"
-                class="btn btn-success btn-sm mt-2"
-              >
-                <i class="fab fa-whatsapp me-1"></i>WhatsApp
-              </a>
-            </div>
-          </div>
-          <div class="col-lg-4 text-center mb-4">
-            <div class="contact-info">
-              <i class="fas fa-map-marker-alt fa-2x text-primary mb-3"></i>
-              <h5>Location</h5>
-              <p>Riyadh, KSA</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- Footer -->
     <footer class="bg-dark text-light py-4">
@@ -606,8 +1031,22 @@
       </div>
     </footer>
 
+    <!-- Floating WhatsApp Button -->
+    <div class="whatsapp-float" id="whatsappFloat">
+      <a href="https://wa.me/966562724688?text=Hi%20Launch%20Supp,%20I%20would%20like%20to%20discuss%20a%20project%20with%20you." target="_blank" class="whatsapp-link">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+      <div class="whatsapp-tooltip">
+        <span>Chat with me on WhatsApp!</span>
+      </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <!-- Custom JS -->
     <script src="script.js"></script>
   </body>
