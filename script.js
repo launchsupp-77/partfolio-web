@@ -1,6 +1,8 @@
 // Personal Portfolio JavaScript
 
 document.addEventListener('DOMContentLoaded', function () {
+  console.log('DOM Content Loaded - Initializing portfolio...');
+
   // Initialize all functionality
   initNavbar();
   initSmoothScrolling();
@@ -14,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
   initCodeCopy();
   initSyntaxHighlighting();
   initWhatsAppFloat();
+
+  console.log('All portfolio functions initialized');
 });
 
 // Navbar functionality
@@ -789,67 +793,145 @@ revealSections();
 
 // Download CV functionality
 function initDownloadCV() {
-  const downloadPdfBtn = document.getElementById('downloadPdfBtn');
-  const downloadDocBtn = document.getElementById('downloadDocBtn');
+  console.log('Download CV function called');
 
-  // PDF Download functionality
-  if (downloadPdfBtn) {
-    downloadPdfBtn.addEventListener('click', function (e) {
-      e.preventDefault();
+  // Wait a bit to ensure DOM is fully loaded
+  setTimeout(() => {
+    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+    const downloadDocBtn = document.getElementById('downloadDocBtn');
 
-      // Show loading state
-      const originalText = this.innerHTML;
-      this.innerHTML =
-        '<i class="fas fa-spinner fa-spin me-2"></i>Preparing PDF...';
-      this.disabled = true;
+    console.log('Download CV initialized');
+    console.log('PDF Button:', downloadPdfBtn);
+    console.log('Word Button:', downloadDocBtn);
 
-      // Simulate download process
-      setTimeout(() => {
-        // Download your actual PDF resume file
-        const link = document.createElement('a');
-        link.href =
-          'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.pdf';
-        link.download =
-          'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.pdf';
-        link.click();
+    // PDF Download functionality
+    if (downloadPdfBtn) {
+      console.log('Adding PDF click listener');
+      downloadPdfBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        console.log('PDF button clicked!');
+        alert('PDF button clicked!'); // Temporary test
 
-        // Reset button
-        this.innerHTML = originalText;
-        this.disabled = false;
+        // Show loading state
+        const originalText = this.innerHTML;
+        this.innerHTML =
+          '<i class="fas fa-spinner fa-spin me-2"></i>Preparing PDF...';
+        this.disabled = true;
 
-        showNotification('PDF downloaded successfully!', 'success');
-      }, 2000);
-    });
+        // Simulate download process
+        setTimeout(() => {
+          // Download your actual PDF resume file
+          const link = document.createElement('a');
+          link.href =
+            'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.pdf';
+          link.download = 'Launch_Supp_Resume.pdf';
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+
+          // Add to DOM temporarily
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          // Reset button
+          this.innerHTML = originalText;
+          this.disabled = false;
+
+          showNotification('PDF downloaded successfully!', 'success');
+        }, 2000);
+      });
+    }
+
+    // Word Document Download functionality
+    if (downloadDocBtn) {
+      console.log('Adding Word click listener');
+      downloadDocBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        console.log('Word button clicked!');
+        alert('Word button clicked!'); // Temporary test
+
+        // Show loading state
+        const originalText = this.innerHTML;
+        this.innerHTML =
+          '<i class="fas fa-spinner fa-spin me-2"></i>Preparing Word...';
+        this.disabled = true;
+
+        // Simulate download process
+        setTimeout(() => {
+          // Create a sample Word document download (in real implementation, this would be your actual Word file)
+          const link = document.createElement('a');
+          link.href =
+            'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.docx';
+          link.download = 'Launch_Supp_Resume.docx';
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+
+          // Add to DOM temporarily
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          // Reset button
+          this.innerHTML = originalText;
+          this.disabled = false;
+
+          showNotification('Word document downloaded successfully!', 'success');
+        }, 2000);
+      });
+    }
+  }, 100); // Close setTimeout
+}
+
+// Simple download functions
+function downloadPDF() {
+  console.log('PDF download clicked!');
+  alert('PDF download clicked!');
+
+  try {
+    const link = document.createElement('a');
+    link.href =
+      'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.pdf';
+    link.download = 'Launch_Supp_Resume.pdf';
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    console.log('PDF download started');
+  } catch (error) {
+    console.error('PDF download error:', error);
+    window.open(
+      'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.pdf',
+      '_blank'
+    );
   }
+}
 
-  // Word Document Download functionality
-  if (downloadDocBtn) {
-    downloadDocBtn.addEventListener('click', function (e) {
-      e.preventDefault();
+function downloadWord() {
+  console.log('Word download clicked!');
+  alert('Word download clicked!');
 
-      // Show loading state
-      const originalText = this.innerHTML;
-      this.innerHTML =
-        '<i class="fas fa-spinner fa-spin me-2"></i>Preparing Word...';
-      this.disabled = true;
+  try {
+    const link = document.createElement('a');
+    link.href =
+      'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.docx';
+    link.download = 'Launch_Supp_Resume.docx';
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
 
-      // Simulate download process
-      setTimeout(() => {
-        // Create a sample Word document download (in real implementation, this would be your actual Word file)
-        const link = document.createElement('a');
-        link.href =
-          'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.docx';
-        link.download =
-          'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.docx';
-        link.click();
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
-        // Reset button
-        this.innerHTML = originalText;
-        this.disabled = false;
-
-        showNotification('Word document downloaded successfully!', 'success');
-      }, 2000);
-    });
+    console.log('Word download started');
+  } catch (error) {
+    console.error('Word download error:', error);
+    window.open(
+      'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.docx',
+      '_blank'
+    );
   }
 }
 

@@ -45,16 +45,13 @@
               <a class="nav-link" href="#about">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#portfolio">Portfolio</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="#code-showcase">Code</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#download-cv">Download CV</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#contact">Contact</a>
+              <a class="nav-link" href="#portfolio">Portfolio</a>
             </li>
           </ul>
         </div>
@@ -68,7 +65,7 @@
           <div class="col-lg-6">
             <div class="hero-content">
               <h1 class="display-4 fw-bold text-white mb-4">
-                Hi, I'm <span class="text-primary">Launch Supp</span>
+                Hi, I'm <span class="text-warning" style="color: #ffd700 !important; text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);">Launch Supp</span>
               </h1>
               <h2 class="h3 text-light mb-4">
                 Full Stack Developer
@@ -84,6 +81,9 @@
                 >
                 <a href="#contact" class="btn btn-outline-light btn-lg"
                   >Get In Touch</a
+                >
+                <a href="#download-cv" class="btn btn-primary btn-lg me-3"
+                  >Download CV</a
                 >
               </div>
             </div>
@@ -973,24 +973,30 @@ namespace LaunchSupp.API.Controllers
                 Get a detailed overview of my professional journey
               </p>
               <div class="download-buttons">
-                <a
-                  href="#"
+                <button
+                  type="button"
                   class="btn btn-light btn-lg me-3 mb-3"
                   id="downloadPdfBtn"
+                  onclick="downloadPDF()"
                 >
                   <i class="fas fa-download me-2"></i>PDF Version
-                </a>
-                <a
-                  href="#"
+                </button>
+                <button
+                  type="button"
                   class="btn btn-outline-light btn-lg mb-3"
                   id="downloadDocBtn"
+                  onclick="downloadWord()"
                 >
                   <i class="fas fa-file-word me-2"></i>Word Version
-                </a>
+                </button>
               </div>
               <div class="cv-info mt-4">
                 <small class="text-white-50">
                   <i class="fas fa-clock me-1"></i>Last updated: December 2024
+                </small>
+                <br>
+                <small class="text-white-50">
+                  <i class="fas fa-info-circle me-1"></i>Right-click for more download options
                 </small>
               </div>
             </div>
@@ -1006,7 +1012,7 @@ namespace LaunchSupp.API.Controllers
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-6">
-            <p class="mb-0">&copy; 2026 Launch Supp. All rights reserved.</p>
+            <p class="mb-0">&copy; 2026 <span style="color: #ffd700; text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);">Launch Supp</span>. All rights reserved.</p>
           </div>
           <div class="col-md-6 text-md-end">
             <div class="social-links">

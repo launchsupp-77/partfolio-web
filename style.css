@@ -85,10 +85,8 @@ h6 {
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: 700;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffd700 !important;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
 .nav-link {
@@ -631,10 +629,11 @@ h6 {
 /* Responsive WhatsApp Button */
 @media (max-width: 768px) {
   .whatsapp-float {
-    bottom: 15px;
-    right: 15px;
+    bottom: 20px;
+    right: 20px;
     width: 55px;
     height: 55px;
+    z-index: 1001;
   }
 
   .whatsapp-link i {
@@ -645,25 +644,99 @@ h6 {
     right: 65px;
     font-size: 12px;
     padding: 6px 10px;
+    max-width: 150px;
   }
 }
 
 @media (max-width: 480px) {
   .whatsapp-float {
-    bottom: 10px;
-    right: 10px;
+    bottom: 15px;
+    right: 15px;
     width: 50px;
     height: 50px;
   }
 
   .whatsapp-link i {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .whatsapp-tooltip {
     right: 60px;
-    font-size: 11px;
-    padding: 5px 8px;
+    font-size: 10px;
+    padding: 4px 6px;
+    max-width: 120px;
+  }
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  /* Hero section mobile fixes */
+  .hero-section {
+    padding: 2rem 0;
+    min-height: 100vh;
+  }
+
+  .hero-content {
+    text-align: center;
+    padding: 1rem;
+  }
+
+  /* Mobile button improvements */
+  .btn {
+    border-radius: 8px;
+    font-weight: 500;
+  }
+
+  .btn-primary {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  .btn-outline-light {
+    color: white;
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+  }
+
+  /* Mobile navigation fixes */
+  .navbar {
+    padding: 0.75rem 0;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.85%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+
+  /* Mobile code sections */
+  .code-stats {
+    padding: 1.5rem 1rem;
+  }
+
+  .github-card {
+    padding: 1.5rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Mobile portfolio items */
+  .portfolio-item {
+    margin-bottom: 1.5rem;
+  }
+
+  .portfolio-image img {
+    height: 200px;
+  }
+
+  /* Mobile contact form */
+  .contact-form {
+    margin: 0 0.5rem;
+  }
+
+  .form-control {
+    font-size: 16px; /* Prevents zoom on iOS */
   }
 }
 
@@ -1040,16 +1113,47 @@ footer {
 @media (max-width: 768px) {
   .hero-content h1 {
     font-size: 2.5rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-content h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
   }
 
   .section-title {
     font-size: 2rem;
   }
 
+  .hero-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
   .hero-buttons .btn {
-    display: block;
     width: 100%;
-    margin-bottom: 1rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+  }
+
+  .hero-image {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .profile-image {
+    max-width: 200px;
+    margin: 0 auto;
   }
 
   .contact-form {
@@ -1074,19 +1178,108 @@ footer {
   .cv-stats .stat-item {
     margin-bottom: 1rem;
   }
+
+  /* Mobile navigation improvements */
+  .navbar-brand {
+    font-size: 1.3rem;
+  }
+
+  .navbar-toggler {
+    border: none;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .navbar-collapse {
+    background: rgba(0, 0, 0, 0.95);
+    border-radius: 8px;
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+
+  .nav-link {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-link:last-child {
+    border-bottom: none;
+  }
 }
 
 @media (max-width: 576px) {
   .hero-content h1 {
     font-size: 2rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
   }
 
   .hero-content h2 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-content p {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
   }
 
   .section-title {
     font-size: 1.8rem;
+  }
+
+  .hero-buttons {
+    margin-top: 1.5rem;
+  }
+
+  .hero-buttons .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .profile-image {
+    max-width: 150px;
+  }
+
+  /* Mobile navigation for very small screens */
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .navbar-collapse {
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .nav-link {
+    padding: 0.6rem 0;
+    font-size: 0.9rem;
+  }
+
+  /* Mobile code showcase improvements */
+  .code-snippet {
+    margin-bottom: 1rem;
+  }
+
+  .code-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .code-content pre {
+    padding: 1rem;
+    font-size: 0.8rem;
+  }
+
+  .tech-card {
+    padding: 1.5rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .tech-card h5 {
+    font-size: 1rem;
+  }
+
+  .tech-card p {
+    font-size: 0.85rem;
   }
 }
 
