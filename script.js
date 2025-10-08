@@ -1002,7 +1002,7 @@ typingStyles.textContent = `
 `;
 document.head.appendChild(typingStyles);
 
-// Simple download functions
+// Simple download functions  // Here Using For Google Storage Links 8/10/2025
 function downloadPDF() {
   console.log('PDF download clicked!');
   alert('PDF download clicked!');
@@ -1010,8 +1010,8 @@ function downloadPDF() {
   try {
     const link = document.createElement('a');
     link.href =
-      'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.pdf';
-    link.download = 'Launch_Supp_Resume.pdf';
+      'https://storage.googleapis.com/my-lanuch-data/Mahjoub_Osman_CV_ATS_Bilingual%20-%20Google%20Docs.pdf';
+    link.download = 'Mahjoub_Osman_CV_ATS_Bilingual.pdf';
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
 
@@ -1023,7 +1023,7 @@ function downloadPDF() {
   } catch (error) {
     console.error('PDF download error:', error);
     window.open(
-      'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.pdf',
+      'https://storage.googleapis.com/my-lanuch-data/Mahjoub_Osman_CV_ATS_Bilingual%20-%20Google%20Docs.pdf',
       '_blank'
     );
   }
@@ -1036,8 +1036,8 @@ function downloadWord() {
   try {
     const link = document.createElement('a');
     link.href =
-      'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.docx';
-    link.download = 'Launch_Supp_Resume.docx';
+      'https://storage.googleapis.com/my-lanuch-data/Mahjoub_Osman_CV_ATS_Bilingual.docx';
+    link.download = 'Mahjoub_Osman_CV_ATS_Bilingual.docx';
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
 
@@ -1049,7 +1049,7 @@ function downloadWord() {
   } catch (error) {
     console.error('Word download error:', error);
     window.open(
-      'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.docx',
+      'https://storage.googleapis.com/my-lanuch-data/Mahjoub_Osman_CV_ATS_Bilingual.docx',
       '_blank'
     );
   }
