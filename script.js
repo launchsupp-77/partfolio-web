@@ -823,8 +823,8 @@ function initDownloadCV() {
           // Download your actual PDF resume file
           const link = document.createElement('a');
           link.href =
-            'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.pdf';
-          link.download = 'Launch_Supp_Resume.pdf';
+            'https://storage.googleapis.com/my-lanuch-data/Mahjoub_Osman_CV_ATS_Bilingual%20-%20Google%20Docs.pdf';
+          link.download = 'Mahjoub_Osman_CV_ATS_Bilingual.pdf';
           link.target = '_blank';
           link.rel = 'noopener noreferrer';
 
@@ -861,8 +861,8 @@ function initDownloadCV() {
           // Create a sample Word document download (in real implementation, this would be your actual Word file)
           const link = document.createElement('a');
           link.href =
-            'https://storage.googleapis.com/my-lanuch-data/Lanuch_Supp_Resumev.docx';
-          link.download = 'Launch_Supp_Resume.docx';
+            'https://storage.googleapis.com/my-lanuch-data/Mahjoub_Osman_CV_ATS_Bilingual.docx';
+          link.download = 'Mahjoub_Osman_CV_ATS_Bilingual.docx';
           link.target = '_blank';
           link.rel = 'noopener noreferrer';
 
