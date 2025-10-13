@@ -639,235 +639,9 @@
           </div>
         </div>
 
-        <!-- ASP.NET Code Example -->
-        <div class="row mb-4">
-          <div class="col-lg-12">
-            <div class="code-snippet">
-              <div class="code-header">
-                <div class="code-title">
-                  <i class="fab fa-microsoft me-2"></i>ASP.NET Core Web API Controller
-                  <span class="typing-indicator">
-                    <span class="typing-dot"></span>
-                    <span class="typing-dot"></span>
-                    <span class="typing-dot"></span>
-                  </span>
-                </div>
-                <div class="code-actions">
-                  <button class="btn btn-sm btn-outline-light" onclick="copyCode('aspnet-code')">
-                    <i class="fas fa-copy"></i>
-                  </button>
-                  <button class="btn btn-sm btn-outline-light" onclick="startTypingAnimation()" id="typingBtn">
-                    <i class="fas fa-play"></i> Animate
-                  </button>
-                </div>
-              </div>
-              <div class="code-content">
-                <pre><code id="aspnet-code" class="language-csharp typing-code">using Microsoft.AspNetCore.Mvc;
-        using Microsoft.EntityFrameworkCore;
-        using System.ComponentModel.DataAnnotations;
-        
-        namespace LaunchSupp.API.Controllers
-        {
-            [ApiController]
-            [Route("api/[controller]")]
-            public class UserController : ControllerBase
-            {
-                private readonly ApplicationDbContext _context;
-                private readonly ILogger<UserController> _logger;
-        
-                public UserController(ApplicationDbContext context, ILogger<UserController> logger)
-                {
-                    _context = context;
-                    _logger = logger;
-                }
-        
-                [HttpGet]
-                public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
-                {
-                    try
-                    {
-                        var users = await _context.Users
-                            .Where(u => u.IsActive)
-                            .Select(u => new UserDto
-                            {
-                                Id = u.Id,
-                                Name = u.Name,
-                                Email = u.Email,
-                                CreatedAt = u.CreatedAt
-                            })
-                            .ToListAsync();
-        
-                        return Ok(users);
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex, "Error retrieving users");
-                        return StatusCode(500, "Internal server error");
-                    }
-                }
-        
-                [HttpGet("{id}")]
-                public async Task<ActionResult<UserDto>> GetUser(int id)
-                {
-                    var user = await _context.Users
-                        .Where(u => u.Id == id && u.IsActive)
-                        .Select(u => new UserDto
-                        {
-                            Id = u.Id,
-                            Name = u.Name,
-                            Email = u.Email,
-                            CreatedAt = u.CreatedAt
-                        })
-                        .FirstOrDefaultAsync();
-        
-                    if (user == null)
-                        return NotFound($"User with ID {id} not found");
-        
-                    return Ok(user);
-                }
-        
-                [HttpPost]
-                public async Task<ActionResult<UserDto>> CreateUser([FromBody] CreateUserRequest request)
-                {
-                    if (!ModelState.IsValid)
-                        return BadRequest(ModelState);
-        
-                    // Check if email already exists
-                    if (await _context.Users.AnyAsync(u => u.Email == request.Email))
-                        return Conflict("Email already exists");
-        
-                    var user = new User
-                    {
-                        Name = request.Name,
-                        Email = request.Email,
-                        PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                        CreatedAt = DateTime.UtcNow,
-                        IsActive = true
-                    };
-        
-                    _context.Users.Add(user);
-                    await _context.SaveChangesAsync();
-        
-                    var userDto = new UserDto
-                    {
-                        Id = user.Id,
-                        Name = user.Name,
-                        Email = user.Email,
-                        CreatedAt = user.CreatedAt
-                    };
-        
-                    return CreatedAtAction(nameof(GetUser), new { id = user.Id }, userDto);
-                }
-        
-                [HttpPut("{id}")]
-                public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserRequest request)
-                {
-                    if (!ModelState.IsValid)
-                        return BadRequest(ModelState);
-        
-                    var user = await _context.Users.FindAsync(id);
-                    if (user == null || !user.IsActive)
-                        return NotFound($"User with ID {id} not found");
-        
-                    user.Name = request.Name;
-                    user.Email = request.Email;
-                    user.UpdatedAt = DateTime.UtcNow;
-        
-                    await _context.SaveChangesAsync();
-                    return NoContent();
-                }
-        
-                [HttpDelete("{id}")]
-                public async Task<IActionResult> DeleteUser(int id)
-                {
-                    var user = await _context.Users.FindAsync(id);
-                    if (user == null || !user.IsActive)
-                        return NotFound($"User with ID {id} not found");
-        
-                    user.IsActive = false;
-                    user.DeletedAt = DateTime.UtcNow;
-                    await _context.SaveChangesAsync();
-        
-                    return NoContent();
-                }
-            }
-        
-            // DTOs and Models
-            public class UserDto
-            {
-                public int Id { get; set; }
-                public string Name { get; set; } = string.Empty;
-                public string Email { get; set; } = string.Empty;
-                public DateTime CreatedAt { get; set; }
-            }
-        
-            public class CreateUserRequest
-            {
-                [Required]
-                [StringLength(100, MinimumLength = 2)]
-                public string Name { get; set; } = string.Empty;
-        
-                [Required]
-                [EmailAddress]
-                public string Email { get; set; } = string.Empty;
-        
-                [Required]
-                [StringLength(100, MinimumLength = 6)]
-                public string Password { get; set; } = string.Empty;
-            }
-        
-            public class UpdateUserRequest
-            {
-                [Required]
-                [StringLength(100, MinimumLength = 2)]
-                public string Name { get; set; } = string.Empty;
-        
-                [Required]
-                [EmailAddress]
-                public string Email { get; set; } = string.Empty;
-            }
-        
-            public class User
-            {
-                public int Id { get; set; }
-                public string Name { get; set; } = string.Empty;
-                public string Email { get; set; } = string.Empty;
-                public string PasswordHash { get; set; } = string.Empty;
-                public DateTime CreatedAt { get; set; }
-                public DateTime? UpdatedAt { get; set; }
-                public DateTime? DeletedAt { get; set; }
-                public bool IsActive { get; set; } = true;
-            }
-        
-            public class ApplicationDbContext : DbContext
-            {
-                public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-                    : base(options) { }
-        
-                public DbSet<User> Users { get; set; }
-        
-                protected override void OnModelCreating(ModelBuilder modelBuilder)
-                {
-                    modelBuilder.Entity<User>(entity =>
-                    {
-                        entity.HasKey(e => e.Id);
-                        entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
-                        entity.Property(e => e.Email).IsRequired().HasMaxLength(255);
-                        entity.HasIndex(e => e.Email).IsUnique();
-                        entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
-                    });
-                }
-            }
-        }</code></pre>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-        
-
         <!-- Code Snippets -->
         <div class="row">
-          <div class="col-lg-6 mb-4 d-flex">
+          <div class="col-lg-4 mb-4 d-flex">
             <div class="code-snippet flex-fill d-flex flex-column" style="min-height: 100%;">
               <div class="code-header">
                 <div class="code-title">
@@ -912,61 +686,110 @@ class UserController {
             </div>
           </div>
 
-          <div class="col-lg-6 mb-4 d-flex">
+          <div class="col-lg-4 mb-4 d-flex">
             <div class="code-snippet flex-fill d-flex flex-column" style="min-height: 100%;">
               <div class="code-header">
                 <div class="code-title">
-                  <i class="fab fa-js-square me-2"></i>JavaScript React
-                  Component
+                  <i class="fab fa-microsoft me-2"></i>ASP.NET Core API
                 </div>
                 <div class="code-actions">
                   <button
                     class="btn btn-sm btn-outline-light"
-                    onclick="copyCode('js-code')"
+                    onclick="copyCode('aspnet-code')"
                   >
                     <i class="fas fa-copy"></i>
                   </button>
                 </div>
               </div>
               <div class="code-content flex-fill" style="min-height: 400px;">
-                <pre class="h-100" style="height:100%;"><code id="js-code" class="language-javascript">import React, { useState, useEffect } from 'react';
+                <pre class="h-100" style="height:100%;"><code id="aspnet-code" class="language-csharp">using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
-const UserDashboard = ({ userId }) => {
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
-    
-    useEffect(() => {
-        fetchUserData();
-    }, [userId]);
-    
-    const fetchUserData = async () => {
-        try {
-            const response = await fetch(`/api/users/${userId}`);
-            const userData = await response.json();
-            setUser(userData);
-        } catch (error) {
-            console.error('Error fetching user:', error);
-        } finally {
-            setLoading(false);
+namespace LaunchSupp.API.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class UserController : ControllerBase
+    {
+        [HttpPost]
+        public async Task<ActionResult<UserDto>> CreateUser([FromBody] CreateUserRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            
+            var user = new User
+            {
+                Name = request.Name,
+                Email = request.Email,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+                CreatedAt = DateTime.UtcNow
+            };
+            
+            // Save to database logic here
+            var userDto = new UserDto
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                CreatedAt = user.CreatedAt
+            };
+            
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, userDto);
         }
-    };
-    
-    if (loading) return <div>Loading...</div>;
-    
-    return (
-        <div className="user-dashboard">
-            <h2>Welcome, {user?.name}</h2>
-            <div className="user-stats">
-                <div className="stat-item">
-                    <span className="stat-label">Projects:</span>
-                    <span className="stat-value">{user?.projects?.length || 0}</span>
-                </div>
+    }
+}</code></pre>
+              </div>
             </div>
-        </div>
-    );
-};
+          </div>
 
-export default UserDashboard;</code></pre>
+          <div class="col-lg-4 mb-4 d-flex">
+            <div class="code-snippet flex-fill d-flex flex-column" style="min-height: 100%;">
+              <div class="code-header">
+                <div class="code-title">
+                  <i class="fab fa-python me-2"></i>Python FastAPI
+                </div>
+                <div class="code-actions">
+                  <button
+                    class="btn btn-sm btn-outline-light"
+                    onclick="copyCode('python-code')"
+                  >
+                    <i class="fas fa-copy"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="code-content flex-fill" style="min-height: 400px;">
+                <pre class="h-100" style="height:100%;"><code id="python-code" class="language-python">from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, EmailStr
+from datetime import datetime
+import bcrypt
+
+app = FastAPI()
+
+class UserCreate(BaseModel):
+    name: str
+    email: EmailStr
+    password: str
+
+class UserResponse(BaseModel):
+    id: int
+    name: str
+    email: str
+    created_at: datetime
+
+@app.post("/users/", response_model=UserResponse)
+async def create_user(user: UserCreate):
+    # Hash password
+    password_hash = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
+    
+    # Create user object
+    new_user = {
+        "id": 1,  # Would be generated by database
+        "name": user.name,
+        "email": user.email,
+        "created_at": datetime.now()
+    }
+    
+    return new_user</code></pre>
               </div>
             </div>
           </div>
