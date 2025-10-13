@@ -1,0 +1,8 @@
+# robots.txt for Launch Supp Portfolio
+# This file tells search engines how to crawl your website
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://launchsupp-77.github.io/partfolio-web/sitemap.xml
